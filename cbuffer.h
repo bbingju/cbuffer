@@ -21,9 +21,18 @@ typedef struct _cbuffer {
         .size = _size,                          \
     }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int  cbuffer_isfull(cbuffer_t *self);
 int  cbuffer_isempty(cbuffer_t *self);
 void cbuffer_reset(cbuffer_t *self);
 int  cbuffer_push(cbuffer_t *self, uint8_t data);
 int  cbuffer_pop(cbuffer_t *self, uint8_t *data);
 int  cbuffer_peek(cbuffer_t *self, uint8_t *data);
+int  cbuffer_len(cbuffer_t *self);
+
+#ifdef __cplusplus
+}
+#endif    
