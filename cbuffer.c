@@ -37,7 +37,7 @@ int cbuffer_pop(cbuffer_t *self, uint8_t *data)
 {
     int next = (self->tail + 1) % self->size;
 
-    if (cbuffer_peek(self, data))
+    if (cbuffer_peek(self, data, 0))
         return -1;
 
     self->tail = next;
@@ -45,12 +45,14 @@ int cbuffer_pop(cbuffer_t *self, uint8_t *data)
     return 0;
 }
 
-int cbuffer_peek(cbuffer_t *self, uint8_t *data)
+int cbuffer_peek(cbuffer_t *self, uint8_t *data, int index)
 {
-    if (cbuffer_isempty(self))
+    int i = (self->tail + index) % self->size;
+
+    if (self->tail == self->head) /* is empty? */
         return -1;
 
-    *data = self->buffer[self->tail];
+    *data = self->buffer[i];
 
     return 0;
 }
