@@ -6,6 +6,10 @@
 
 #include <stdint.h>
 
+#ifndef __STATIC_INLINE
+#define __STATIC_INLINE     static inline
+#endif
+
 typedef struct _cbuffer {
     uint8_t *buffer;
     int head, tail;
@@ -25,13 +29,31 @@ typedef struct _cbuffer {
 extern "C" {
 #endif
 
-int  cbuffer_isfull(cbuffer_t *self);
-int  cbuffer_isempty(cbuffer_t *self);
-void cbuffer_reset(cbuffer_t *self);
+__STATIC_INLINE int cbuffer_isfull(cbuffer_t *self)
+{
+    return (self->head + 1) % self->size == self->tail;
+}
+
+__STATIC_INLINE int cbuffer_isempty(cbuffer_t *self)
+{
+    return self->head == self->tail;
+}
+
+__STATIC_INLINE void cbuffer_reset(cbuffer_t *self)
+{
+    self->head = 0;
+    self->tail = 0;
+}
+
+__STATIC_INLINE int cbuffer_len(cbuffer_t *self)
+{
+    return (self->head >= self->tail) ? self->head - self->tail : 
+        self->size - (self->tail - self->head);
+}
+
 int  cbuffer_push(cbuffer_t *self, uint8_t data);
 int  cbuffer_pop(cbuffer_t *self, uint8_t *data);
 int  cbuffer_peek(cbuffer_t *self, uint8_t *data, int index);
-int  cbuffer_len(cbuffer_t *self);
 
 #ifdef __cplusplus
 }

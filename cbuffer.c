@@ -4,22 +4,6 @@
  */
 #include "cbuffer.h"
 
-int cbuffer_isfull(cbuffer_t *self)
-{
-    return (self->head + 1) % self->size == self->tail;
-}
-
-int cbuffer_isempty(cbuffer_t *self)
-{
-    return self->head == self->tail;
-}
-
-void cbuffer_reset(cbuffer_t *self)
-{
-    self->head = 0;
-    self->tail = 0;
-}
-
 int cbuffer_push(cbuffer_t *self, uint8_t data)
 {
     int next = (self->head + 1) % self->size;
@@ -55,10 +39,4 @@ int cbuffer_peek(cbuffer_t *self, uint8_t *data, int index)
     *data = self->buffer[i];
 
     return 0;
-}
-
-int  cbuffer_len(cbuffer_t *self)
-{
-    return (self->head >= self->tail) ? self->head - self->tail : 
-        self->size - (self->tail - self->head);
 }
