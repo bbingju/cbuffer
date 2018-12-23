@@ -24,7 +24,7 @@ int cbuffer_push(cbuffer_t *self, uint8_t data)
 {
     int next = (self->head + 1) % self->size;
 
-    if (cbuffer_isfull(self))
+    if (next == self->tail)     /* is full? */
         return -1;
 
     self->buffer[self->head] = data;
