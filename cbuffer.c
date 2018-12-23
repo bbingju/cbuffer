@@ -58,5 +58,5 @@ int cbuffer_peek(cbuffer_t *self, uint8_t *data)
 int  cbuffer_len(cbuffer_t *self)
 {
     return (self->head >= self->tail) ? self->head - self->tail : 
-        self->tail - (self->tail - self->head);
+        self->size - (self->tail - self->head);
 }
