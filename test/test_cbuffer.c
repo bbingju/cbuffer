@@ -14,6 +14,32 @@ TEST_TEAR_DOWN(cbuffer)
 {
 }
 
+TEST(cbuffer, cbuffer_ShouldNumberOfElementsCorrectly)
+{
+    uint8_t data;
+
+    cbuffer_reset(&test_buffer);
+
+    cbuffer_push(&test_buffer, 'a');
+    TEST_ASSERT_EQUAL_INT32(1, cbuffer_len(&test_buffer));
+
+    cbuffer_push(&test_buffer, 'b');
+    TEST_ASSERT_EQUAL_INT32(2, cbuffer_len(&test_buffer));
+
+    cbuffer_push(&test_buffer, 'c');
+    TEST_ASSERT_EQUAL_INT32(3, cbuffer_len(&test_buffer));
+
+    cbuffer_push(&test_buffer, 'd');
+    TEST_ASSERT_EQUAL_INT32(3, cbuffer_len(&test_buffer));
+
+    cbuffer_pop(&test_buffer, &data);
+    TEST_ASSERT_EQUAL_INT8('a', data);
+    TEST_ASSERT_EQUAL_INT32(2, cbuffer_len(&test_buffer));
+
+    cbuffer_push(&test_buffer, 'e');
+    TEST_ASSERT_EQUAL_INT32(3, cbuffer_len(&test_buffer));
+}
+
 TEST(cbuffer, cbuffer_ShouldBufferIsFull)
 {
     /* uint8_t data; */
