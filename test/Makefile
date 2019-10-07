@@ -41,7 +41,6 @@ TARGET1 = $(TARGET_BASE1)$(TARGET_EXTENSION)
 SRC_FILES1 = \
   $(UNITY_ROOT)/src/unity.c \
   $(UNITY_ROOT)/extras/fixture/src/unity_fixture.c \
-  ../cbuffer.c \
   test_cbuffer.c \
   test_runners/test_cbuffer_Runner.c \
   test_runners/all_tests.c
